@@ -1,0 +1,10 @@
+D:\Programming\компьютерная графика\ImageLab\ImageLab\bin\Debug\ImageLab.exe.config
+D:\Programming\компьютерная графика\ImageLab\ImageLab\bin\Debug\ImageLab.exe
+D:\Programming\компьютерная графика\ImageLab\ImageLab\bin\Debug\ImageLab.pdb
+D:\Programming\компьютерная графика\ImageLab\ImageLab\obj\Debug\ImageLab.csprojAssemblyReference.cache
+D:\Programming\компьютерная графика\ImageLab\ImageLab\obj\Debug\ImageLab.Properties.Resources.resources
+D:\Programming\компьютерная графика\ImageLab\ImageLab\obj\Debug\ImageLab.csproj.GenerateResource.cache
+D:\Programming\компьютерная графика\ImageLab\ImageLab\obj\Debug\ImageLab.exe
+D:\Programming\компьютерная графика\ImageLab\ImageLab\obj\Debug\ImageLab.pdb
+D:\Programming\компьютерная графика\ImageLab\ImageLab\obj\Debug\ImageLab.Form1.resources
+D:\Programming\компьютерная графика\ImageLab\ImageLab\obj\Debug\ImageLab.Form2.resources
