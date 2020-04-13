@@ -79,16 +79,6 @@ namespace ImageLab {
             backgroundWorker1.RunWorkerAsync(filter);
         }
 
-        private void поОсиXToolStripMenuItem_Click(object sender, EventArgs e) {
-            SobelOxFilter filter = new SobelOxFilter();
-            backgroundWorker1.RunWorkerAsync(filter);
-        }
-
-        private void поОсиYToolStripMenuItem_Click(object sender, EventArgs e) {
-            SobelOyFilter filter = new SobelOyFilter();
-            backgroundWorker1.RunWorkerAsync(filter);
-        }
-
         private void повыситьРезкостьToolStripMenuItem_Click(object sender, EventArgs e) {
             UpSharpnessFilter filter = new UpSharpnessFilter();
             backgroundWorker1.RunWorkerAsync(filter);
@@ -171,6 +161,11 @@ namespace ImageLab {
                 System.IO.FileStream fs = (System.IO.FileStream)dialog.OpenFile();
                 image.Save(fs, System.Drawing.Imaging.ImageFormat.Jpeg);
             }
+        }
+
+        private void фильтрСобеляToolStripMenuItem_Click(object sender, EventArgs e) {
+            SobelFilter filter = new SobelFilter();
+            backgroundWorker1.RunWorkerAsync(filter);
         }
     }
 }

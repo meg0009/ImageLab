@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace ImageLab {
     class MatrixFilter : Filters {
@@ -160,6 +161,7 @@ namespace ImageLab {
         }
     }
 
+    //фильтр Собеля
     class SobelFilter : MatrixFilter {
         protected float[,] Ox = null;
         protected float[,] Oy = null;
@@ -167,9 +169,51 @@ namespace ImageLab {
             Ox = new float[3, 3] { { -1, 0, 1 }, { -2, 0, 2 }, { -1, 0, 1 } };
             Oy = new float[3, 3] { { -1, -2, -1 }, { 0, 0, 0 }, { 1, 2, 1 } };
         }
+
+        protected override Color calculateNewPixelColor(Bitmap sourceImage, int x, int y) {
+            kernel = Ox;
+            int radiusX = kernel.GetLength(0) / 2;
+            int radiusY = kernel.GetLength(1) / 2;
+            float tmpR1 = 0;
+            float tmpG1 = 0;
+            float tmpB1 = 0;
+            for (int l = -radiusY; l <= radiusY; l++) {
+                for (int k = -radiusX; k <= radiusX; k++) {
+                    int idX = Clamp(x + k, 0, sourceImage.Width - 1);
+                    int idY = Clamp(y + l, 0, sourceImage.Height - 1);
+                    Color neighborColor = sourceImage.GetPixel(idX, idY);
+                    tmpR1 += neighborColor.R * kernel[k + radiusX, l + radiusY];
+                    tmpG1 += neighborColor.G * kernel[k + radiusX, l + radiusY];
+                    tmpB1 += neighborColor.B * kernel[k + radiusX, l + radiusY];
+                }
+            }
+            kernel = Oy;
+            float tmpR2 = 0;
+            float tmpG2 = 0;
+            float tmpB2 = 0;
+            for (int l = -radiusY; l <= radiusY; l++) {
+                for (int k = -radiusX; k <= radiusX; k++) {
+                    int idX = Clamp(x + k, 0, sourceImage.Width - 1);
+                    int idY = Clamp(y + l, 0, sourceImage.Height - 1);
+                    Color neighborColor = sourceImage.GetPixel(idX, idY);
+                    tmpR2 += neighborColor.R * kernel[k + radiusX, l + radiusY];
+                    tmpG2 += neighborColor.G * kernel[k + radiusX, l + radiusY];
+                    tmpB2 += neighborColor.B * kernel[k + radiusX, l + radiusY];
+                }
+            }
+            float resultR = (float)Math.Sqrt(tmpR1 * tmpR1 + tmpR2 * tmpR2);
+            float resultG = (float)Math.Sqrt(tmpG1 * tmpG1 + tmpG2 * tmpG2);
+            float resultB = (float)Math.Sqrt(tmpB1 * tmpB1 + tmpB2 * tmpB2);
+            float Intensity = 0.299f * (float)resultR + 0.587f * (float)resultG + 0.114f * (float)resultB;
+            return Color.FromArgb(
+                Clamp((int)Intensity, 0, 255),
+                Clamp((int)Intensity, 0, 255),
+                Clamp((int)Intensity, 0, 255)
+                );
+        }
     }
 
-    //фильтр Собела ориентированный по оси Ox
+    /*//фильтр Собела ориентированный по оси Ox
     class SobelOxFilter : SobelFilter {
         public SobelOxFilter() {
             kernel = Ox;
@@ -182,7 +226,7 @@ namespace ImageLab {
         public SobelOyFilter() {
             kernel = Oy;
         }
-    }
+    }*/
 
     //фильтр повышения резкости
     class UpSharpnessFilter : MatrixFilter {
